@@ -42,7 +42,10 @@ def show_blog(request, blog_id):
 		blog_item.increment_views()
 		list_of_blog_posts = Post.objects.filter(blog=blog_item)
 		if request.user.is_authenticated():
-			form = PostForm()
+			if request.user == blog_item.user:
+				form = PostForm()
+			else:
+				form = None
 			if Follow.objects.filter(follower=request.user, followed=blog_item.user):
 				follow = True
 			else:
@@ -61,9 +64,11 @@ def show_blog(request, blog_id):
 
 def delete_blog(request, blog_id):
 	try:
-		blog = Blog.objects.get(id=blog_id).delete()
+		blog = Blog.objects.get(id=blog_id)
 		if not request.user.is_authenticated() or request.user != blog.user:
 			raise PermissionDenied
+		else:
+			blog.delete()
 	except Blog.DoesNotExist:
 		blog = None
 	return redirect('index')

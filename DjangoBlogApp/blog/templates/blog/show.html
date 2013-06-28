@@ -2,15 +2,15 @@
 <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 
 <div class="pull-right btn-group">
-    {% if form %}
+    {% if follow == None %}
+        <a href="/blog/" class="btn btn-mini btn-primary">login</a>
+    {% else %}
         {% if follow %}
             <a href="/blog/{{ blog.id }}/unfollow/" class="btn btn-mini btn-danger">Unfollow</a>
         {% else %}
             <a href="/blog/{{ blog.id }}/follow/" class="btn btn-mini btn-primary">Follow</a>
         {% endif %}
         <a href="/blog/logout/" class="btn btn-mini btn-danger">logout</a>
-    {% else %}
-        <a href="/blog/" class="btn btn-mini btn-primary">login</a>
     {% endif %}
 </div>
 
