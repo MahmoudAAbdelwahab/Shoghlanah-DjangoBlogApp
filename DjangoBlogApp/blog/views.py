@@ -39,9 +39,13 @@ def create_blog(request):
 def show_blog(request, blog_id):
 	try:
 		blog_item = Blog.objects.get(id=blog_id)
-		blog_item.increment_views()
 		list_of_blog_posts = Post.objects.filter(blog=blog_item)
 		if request.user.is_authenticated():
+			try:
+				view = BlogView.objects.get(viewer=request.user, blog=blog_item)
+			except BlogView.DoesNotExist:
+				BlogView.objects.create(viewer=request.user, blog=blog_item)
+				blog_item.increment_views()
 			if request.user == blog_item.user:
 				form = PostForm()
 			else:

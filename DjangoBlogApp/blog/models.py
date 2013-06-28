@@ -10,6 +10,10 @@ class Blog(models.Model):
 		self.no_of_views += 1
 		self.save()
 
+class BlogView(models.Model):
+	viewer = models.ForeignKey(User)
+	blog = models.ForeignKey(Blog)
+
 class Post(models.Model):
 	user = models.ForeignKey(User)
 	blog = models.ForeignKey(Blog)
