@@ -10,7 +10,9 @@
     {% for blog in blogs %}
         <li>
        		<a href="/blog/{{ blog.id }}/" class="btn btn-link btn-large">{{ blog.user.username }}</a>
-       		<a href="/blog/{{ blog.id }}/delete/" class="btn btn-danger btn-mini">delete</a>
+       		{% if blog.user == user %}
+       			<a href="/blog/{{ blog.id }}/delete/" class="btn btn-danger btn-mini">delete</a>
+       		{% endif %}
         </li>
     {% endfor %}
     </ul>

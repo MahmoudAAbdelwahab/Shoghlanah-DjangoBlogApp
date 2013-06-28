@@ -13,6 +13,10 @@
 <h1>{{ post.title }}:</h1>
 <p>{{ post.content }}</p>
 
+{% if post.user == user %}
+  <a href="/blog/post/{{ post.id }}/edit/" class="btn btn-mini btn-danger">edit your post</a>
+{% endif %}
+
 <a name="fb_share" type="button_count" onclick="
     window.open(
       'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 
@@ -33,10 +37,14 @@
         </li>
     {% endfor %}
     </ul>
+{% else %}
+  <p>No comments available.</p>
 {% endif %}
 
-<p>new comment:</p>
-<form class="navbar-form pull-left" action="/blog/post/{{ post.id }}/comment/add/" method="POST">{% csrf_token %}
-  {{ form }}
-  <input type="submit" class="btn btn-primary btn-mini" value="add comment">
-</form>
+{% if form %}
+  <p>new comment:</p>
+  <form class="navbar-form pull-left" action="/blog/post/{{ post.id }}/comment/add/" method="POST">{% csrf_token %}
+    {{ form }}
+    <input type="submit" class="btn btn-primary btn-mini" value="add comment">
+  </form>
+{% endif %}
