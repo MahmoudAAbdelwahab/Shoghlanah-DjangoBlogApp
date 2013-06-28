@@ -10,6 +10,12 @@
   })();
 </script>
 
+{% if form %}
+  <a href="/blog/logout/" class="pull-right btn btn-mini btn-danger">logout</a>
+{% else %}
+  <a href="/blog/" class="pull-right btn btn-mini btn-primary">login</a>
+{% endif %}
+
 <h1>{{ post.title }}:</h1>
 <p>{{ post.content }}</p>
 
