@@ -1,0 +1,27 @@
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<a href="" class="pull-right btn btn-mini btn-danger">logout</a>
+<h1>Welcome to {{ blog.user.username }}'s blog</h1>
+<p>This blog has {{ blog.no_of_views }} views ;)</p>
+
+<a href="/blog/{{ blog.id }}/delete/" class="btn btn-danger btn-mini">delete blog</a>
+
+{% if posts %}
+	<h3>Posts:-</h3>
+    <ul>
+    {% for post in posts %}
+        <li>
+        	<a href="/blog/post/{{ post.id }}/" class="btn btn-link btn-large">{{ post.title }}</a>
+       		<a href="/blog/post/{{ post.id }}/delete/" class="btn btn-danger btn-mini">delete</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>There are no posts available yet</p>
+{% endif %}
+
+<h3>new post:</h3>
+<form class="navbar-form pull-left" action="/blog/{{ blog.id }}/post/create/" method="POST">{% csrf_token %}
+    {{ form }}
+    <input type="submit" class="btn btn-primary btn-mini" value="add post">
+</form>
