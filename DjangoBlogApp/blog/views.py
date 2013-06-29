@@ -21,7 +21,6 @@ def logout_user(request):
 	return redirect('index')
 
 def index(request):
-	print request.user
 	if not request.user.is_authenticated():
 		form = UserForm()
 		return render(request, 'home/login.html', {'form': form})
