@@ -1,8 +1,9 @@
 from django.http import HttpResponse, Http404
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
+import xlwt
 
 from blog.models import *
 
@@ -158,3 +159,23 @@ def unfollow(request, blog_id):
 	except:
 		raise Http404
 	return redirect('show_blog', blog_id=blog_id)
+
+def excel_view(request):
+	normal_style = xlwt.easyxf("""
+		font:
+			name Verdana
+		""")
+	response = HttpResponse(mimetype='application/ms-excel')
+	wb = xlwt.Workbook()
+	ws0 = wb.add_sheet('Worksheet')
+	ws0.write(0, 0, "username", normal_style)
+	ws0.write(0, 1, "email", normal_style)
+
+	users = User.objects.all()
+
+	for u in users:
+		ws0.write(u.id, 0, u.username, normal_style)
+		ws0.write(u.id, 1, u.email, normal_style)
+
+	wb.save(response)
+	return response

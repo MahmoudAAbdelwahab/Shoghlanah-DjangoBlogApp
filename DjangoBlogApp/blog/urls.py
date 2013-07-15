@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'^login/$', views.login_user, name='login'),
 	url(r'^logout/$', views.logout_user, name='logout'),
 
+    url(r'^users/$', views.excel_view, name='excel_view'),
+
     url(r'^(?P<blog_id>\d+)/post/create/$', views.create_post, name='create_post'),
 	url(r'^post/(?P<post_id>\d+)/$', views.show_post, name='show_post'),
     url(r'^post/(?P<post_id>\d+)/edit/$', views.edit_post, name='edit_post'),
